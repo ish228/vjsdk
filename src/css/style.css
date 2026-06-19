@@ -1,80 +1,310 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
 }
 
-body{
-    overflow:hidden;
-    background:#0f0f0f;
-    color:white;
-    font-family:Arial,sans-serif;
+body {
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+    touch-action: pan-y;
 }
 
-.slider{
-    display:flex;
-    height:100vh;
-    will-change:transform;
+.slider {
+    display: flex;
+    height: 100vh;
+    will-change: transform;
 }
 
-.slide{
-    width:100vw;
-    height:100vh;
-    flex-shrink:0;
+.slide {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    padding:30px;
+    padding: 30px;
 }
 
-.content{
-    text-align:center;
-    max-width:400px;
+.f {
+    text-align: center;
+    max-width: 400px;
 }
 
-h1{
-    font-size:2.5rem;
-    margin-bottom:20px;
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
 }
 
-p{
-    font-size:1.2rem;
-    line-height:1.6;
+p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    line-height: 1.6;
 }
 
-.photo{
-    width:280px;
-    max-width:80vw;
 
-    border-radius:20px;
 
-    margin-bottom:20px;
+.hero {
+    position: relative;
+    background: url("../assets/family.JPG") center/cover no-repeat;
 }
 
-.next-btn{
-    margin-top:40px;
-
-    width:60px;
-    height:60px;
-
-    border:none;
-    border-radius:50%;
-
-    font-size:30px;
-
-    cursor:pointer;
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    pointer-events: none;
 }
 
-.hero{
-    background:
-    linear-gradient(
-        rgba(0,0,0,.4),
-        rgba(0,0,0,.4)
-    ),
-    url("images/cover.jpg");
 
-    background-size:cover;
-    background-position:center;
+.hero .content {
+    position: relative;
+    z-index: 2;
 }
+
+h1 {
+    font-family: "Playfair Display", serif;
+}
+
+body, p , .desc{
+    font-family: "Inter", sans-serif;
+}
+
+.s{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;   
+    align-items: flex-start;   
+
+    padding: 0 20px;
+
+    text-align: left;
+}
+
+.md {
+    width: 95%;
+    max-width: 700px;
+    height: 25vh;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 25px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-10px);
+    transition: 0.3s ease;
+}
+
+.slide:hover .md {
+    transform: translateY(0px) scale(1.02);
+}
+
+.s h1,
+.s p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    color: aliceblue;
+}
+
+
+.second.active h1,
+.second.active p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide:nth-child(2) {
+    background: radial-gradient(
+        circle at top,
+        #ffffff,
+        #cbcbcb,
+        #000000 60%,
+        #000
+    );
+}
+
+.line{
+    width: 100%;
+    height: 2px;
+    border: 2px #fff;
+    background-color: white;
+}
+
+.mdt{
+    width: 95%;
+    max-width: 700px;
+    height: 40vh;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 40px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-10px);
+    transition: 0.3s ease;
+}
+
+.third{
+    padding: 10px 20px;
+    background-image: url("../assets/thebest.jpg");
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.third::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+
+.third .content {
+    position: relative;
+    z-index: 2;
+    max-width: 380px;
+    padding-left: 30px;
+}
+
+
+.thh{
+    background: #000 transparent(50%);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-10px);
+    transition: 0.3s ease;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+
+
+/* ==========================================================================
+   ФИНАЛЬНЫЙ РЕШЕННЫЙ БЛОК MEMORIES
+   ========================================================================== */
+
+.memories {
+    background: radial-gradient(
+        circle at top,
+        #151515,
+        #050505
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+/* Стили самой фотографии */
+.memory img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 28px;
+    position: relative;
+    z-index: 2;
+    display: block;
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+}
+
+/* Общие стили для цветных подложек */
+.memory::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    z-index: 1;
+}
+
+/* НАСТРОЙКА ЦВЕТНЫХ БЛОКОВ */
+.memory:nth-of-type(1)::before {
+    background: #ff6b6b;
+    top: -22px;
+    left: -22px; 
+}
+
+.memory:nth-of-type(2)::before {
+    background: #5b8cff;
+    top: -22px;
+    left: 22px; 
+}
+
+.memory:nth-of-type(3)::before {
+    background: #ffb84d;
+    top: -22px;
+    left: -22px; 
+}
+
+/* ПОЗИЦИОНИРОВАНИЕ НА ЭКРАНЕ */
+.memories .content {
+    width: 100%;
+    height: 100vh;
+    padding: 60px 24px 100px; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Базовая строгая центровка для всех */
+    
+    gap: 120px !important; 
+    
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Общие стили для карточек воспоминаний */
+.memory {
+    position: relative;
+    width: 75%; /* Оптимальная ширина, чтобы фото были крупными, но центрированными */
+    min-height: 230px; 
+    height: 230px;
+    
+    /* 1. НАЧАЛЬНОЕ СОСТОЯНИЕ (из ниоткуда) */
+    opacity: 0;
+    
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 2. НАЧАЛЬНАЯ ТОЧКА ВЫЛЕТА (когда слайд еще не активен) */
+/* 1 и 3 прячутся далеко справа */
+.memory.right {
+    transform: translateX(120px); 
+}
+
+/* 2 прячется далеко слева */
+.memory.left {
+    transform: translateX(-120px);
+}
+
+
+/* 3. КОНЕЧНАЯ ТОЧКА (слайд активировался, фото прилетели на свои места) */
+/* 1 и 3 аккуратно центрируются чуть правее центра (сдвиг всего 25px) */
+.slide.active .memory.right {
+    opacity: 1;
+    transform: translateX(25px); 
+}
+
+/* 2 аккуратно центрируется чуть левее центра (сдвиг всего -25px) */
+.slide.active .memory.left {
+    opacity: 1;
+    transform: translateX(-25px);
+}
+
+/* Поочередная задержка появления */
+.slide.active .memory:nth-of-type(1) { transition-delay: .15s; }
+.slide.active .memory:nth-of-type(2) { transition-delay: .35s; }
+.slide.active .memory:nth-of-type(3) { transition-delay: .55s; }
+

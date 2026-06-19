@@ -1,99 +1,85 @@
 const slider = document.querySelector(".slider");
 const slides = document.querySelectorAll(".slide");
-const nextBtn = document.querySelector(".next-btn");
 
 let current = 0;
+let startX = 0;
+let isDragging = false;
 
-function goToSlide(index){
+let width = slides[0].offsetWidth;
 
-    current = Math.max(
-        0,
-        Math.min(index, slides.length - 1)
-    );
+function update(animated = true) {
+
+    width = slides[0].offsetWidth;
 
     slider.style.transition =
-        "transform .35s ease";
+        animated
+            ? "transform .35s ease"
+            : "none";
 
     slider.style.transform =
-        `translateX(-${current * window.innerWidth}px)`;
-}
+        `translateX(-${current * width}px)`;
 
-if(nextBtn){
-    nextBtn.addEventListener("click", () => {
-        goToSlide(current + 1);
-    });
+    setActiveSlide();
 }
-
 // клавиатура
 document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") current++;
+    if (e.key === "ArrowLeft") current--;
 
-    if(e.key === "ArrowRight"){
-        goToSlide(current + 1);
-    }
-
-    if(e.key === "ArrowLeft"){
-        goToSlide(current - 1);
-    }
-
+    current = Math.max(0, Math.min(current, slides.length - 1));
+    update();
 });
 
-// свайпы
-let startX = 0;
-let currentX = 0;
-let dragging = false;
-
+// свайп старт
 document.addEventListener("touchstart", (e) => {
-
     startX = e.touches[0].clientX;
-    dragging = true;
-
+    isDragging = true;
     slider.style.transition = "none";
-
 });
 
+// свайп движение
 document.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
 
-    if(!dragging) return;
+    let diff = e.touches[0].clientX - startX;
 
-    currentX = e.touches[0].clientX;
+    let move = -current * width + diff;
 
-    const diff = currentX - startX;
-
-    const offset =
-        -current * window.innerWidth + diff;
-
-    slider.style.transform =
-        `translateX(${offset}px)`;
-
+    slider.style.transform = `translateX(${move}px)`;
 });
 
+// свайп конец
 document.addEventListener("touchend", (e) => {
+    isDragging = false;
 
-    if(!dragging) return;
+    let diff = e.changedTouches[0].clientX - startX;
+    let threshold = 60;
 
-    dragging = false;
+    if (diff < -threshold) current++;
+    if (diff > threshold) current--;
 
-    const endX =
-        e.changedTouches[0].clientX;
+    current = Math.max(0, Math.min(current, slides.length - 1));
 
-    const diff = endX - startX;
-
-    if(diff < -70 &&
-        current < slides.length - 1){
-
-        current++;
-    }
-
-    if(diff > 70 &&
-        current > 0){
-
-        current--;
-    }
-
-    slider.style.transition =
-        "transform .35s ease";
-
-    slider.style.transform =
-        `translateX(-${current * window.innerWidth}px)`;
-
+    update();
 });
+
+
+window.addEventListener("resize", () => {
+    update(false);
+});
+
+
+update(false);
+
+function setActiveSlide() {
+
+    slides.forEach((slide, index) => {
+
+        slide.classList.toggle(
+            "active",
+            index === current
+        );
+
+    });
+
+}
